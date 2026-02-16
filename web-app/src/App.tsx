@@ -37,7 +37,7 @@ export default function App() {
       </nav>
       <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl">
+          <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl backdrop-blur-xl">
             <textarea 
               className="w-full h-64 bg-slate-950/50 border border-slate-800 rounded-2xl p-5 text-slate-200 focus:outline-none focus:border-[#00f2fe]"
               placeholder="Вставте текст для аналізу..."
@@ -49,13 +49,13 @@ export default function App() {
             </button>
           </div>
           {result && (
-            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl animate-in fade-in">
-              <h2 className="text-slate-400 text-sm font-semibold mb-4 uppercase">Reasoning Traces</h2>
+            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl">
+              <h2 className="text-slate-400 text-sm font-semibold mb-4 uppercase tracking-widest">Reasoning Traces</h2>
               <div className="space-y-4">
                 {result.reasoning.map((trace: string, i: number) => (
                   <div key={i} className="flex gap-4 p-4 bg-slate-950/80 rounded-xl border-l-2 border-[#00f2fe]">
                     <CheckCircle size={18} className="text-[#00f2fe] mt-1" />
-                    <p className="text-slate-300 text-sm">{trace}</p>
+                    <p className="text-slate-300 text-sm leading-relaxed">{trace}</p>
                   </div>
                 ))}
               </div>
@@ -63,7 +63,7 @@ export default function App() {
           )}
         </div>
         <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-3xl text-center h-fit">
-          <h2 className="text-slate-400 text-sm font-semibold mb-6 uppercase">Metrics</h2>
+          <h2 className="text-slate-400 text-sm font-semibold mb-6 uppercase tracking-widest">Credibility Metrics</h2>
           {result ? (
             <div className="relative h-48">
                <ResponsiveContainer width="100%" height="100%">
@@ -73,7 +73,7 @@ export default function App() {
               </ResponsiveContainer>
               <div className="absolute inset-0 flex items-center justify-center text-2xl font-black text-[#00f2fe]">98.5%</div>
             </div>
-          ) : <div className="py-20 text-slate-600 italic">Очікування...</div>}
+          ) : <div className="py-20 text-slate-600 italic">Очікування вводу...</div>}
         </div>
       </main>
     </div>
