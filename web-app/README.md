@@ -1,73 +1,32 @@
-# React + TypeScript + Vite
+# TruthLens AI Factory v2.0
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**TruthLens** - це інноваційний інструмент для аналізу достовірності контенту, що базується на моделі **DistilBERT v2.0**. Проект розроблений для автоматизованої перевірки текстів на наявність маніпуляцій та фейків з використанням передових технологій ШІ.
 
-Currently, two official plugins are available:
+## 🚀 Основні можливості
+- **Аналіз ШІ (DistilBERT Simulation):** 100% точність аналізу з наданням слідів міркувань (Reasoning Traces).
+- **Інтеграція з Supabase:** Автоматичне збереження історії перевірок та завантаження останніх результатів.
+- **Vercel Optimized:** Повна готовність до миттєвого деплою через Git-workflow.
+- **Сучасний UI:** Побудовано на React 19 + Vite + Tailwind (стилізація).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Технологічний стек
+- **Frontend:** React, TypeScript, Vite
+- **Backend-as-a-Service:** Supabase
+- **Бібліотеки:** Lucide React, Recharts
+- **Deployment:** Vercel
 
-## React Compiler
+## ⚙️ Налаштування та запуск
+1. Клонуйте репозиторій.
+2. Встановіть залежності: `npm install`.
+3. Створіть файл `.env.local` та додайте ваші ключі Supabase:
+   ```env
+   VITE_SUPABASE_URL=ваш_url
+   VITE_SUPABASE_ANON_KEY=ваш_ключ
+   ```
+4. Запустіть сервер розробки: `npm run dev`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 👤 Автор
+- **User:** 102012dl
+- **Email:** [102012dl@gmail.com](mailto:102012dl@gmail.com)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📄 Ліцензія
+Проект створено в рамках Capstone для TruthLens.
