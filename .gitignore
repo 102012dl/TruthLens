@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+venv/
+.env
+.DS_Store
+.ipynb_checkpoints/
+data/raw/*
+!data/raw/.gitkeep
+models/*.pkl
+mlruns/
+*.log
+*.sh
