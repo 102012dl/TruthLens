@@ -14,6 +14,13 @@ interface ReasoningTraces {
   reliabilityAssessment: string;
 }
 
+interface HistoryItem {
+  text: string;
+  result: string;
+  confidence: number;
+  reasoning_traces: string;
+  created_at: string;
+}
 interface AnalysisResult {
   text: string;
   verdict: 'REAL' | 'FAKE';
@@ -29,7 +36,7 @@ const App: FC = () => {
   const [text, setText] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [historyData, setHistoryData] = useState<any[]>([]);
+  const [historyData, setHistoryData] = useState<HistoryItem[]>([]); 
 
   // useEffect для автоматичного завантаження останніх 5 записів із Supabase
   useEffect(() => {
