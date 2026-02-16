@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Data (Don't commit large datasets)
+data/raw/*
+!data/raw/.gitkeep
+models/*.pkl
+mlruns/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
