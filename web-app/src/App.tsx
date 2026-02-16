@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Shield, Search, Activity, CheckCircle, BarChart3 } from 'lucide-react';
+import { useState } from 'react';
+import { Shield, Activity, CheckCircle } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const MOCK_DATA = [{ name: 'Credible', value: 98.5 }, { name: 'Uncertain', value: 1.5 }];
@@ -19,7 +19,7 @@ export default function App() {
         reasoning: [
           "Контекстуальний аналіз підтверджує нейтральний тон звітності.",
           "Семантична відповідність джерелам становить 98.5%.",
-          "Відсутні ознаки маніпулятивної емоційності, притаманної фейкам."
+          "Відсутні ознаки маніпулятивної емоційності."
         ]
       });
       setIsAnalyzing(false);
@@ -33,18 +33,16 @@ export default function App() {
           <Shield className="text-[#00f2fe]" size={32} />
           <h1 className="text-2xl font-bold tracking-tight">TruthLens AI Factory</h1>
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">
-          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-          DistilBERT v2.0 Active
+        <div className="bg-slate-900 px-3 py-1 rounded-full text-xs text-slate-400 border border-slate-800">
+          DistilBERT Active
         </div>
       </nav>
 
       <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl backdrop-blur-xl">
-            <h2 className="text-slate-400 text-sm font-semibold mb-4 uppercase tracking-widest">Input Analysis Factory</h2>
             <textarea 
-              className="w-full h-64 bg-slate-950/50 border border-slate-800 rounded-2xl p-5 text-slate-200 focus:outline-none focus:border-[#00f2fe] transition-all"
+              className="w-full h-64 bg-slate-950/50 border border-slate-800 rounded-2xl p-5 text-slate-200 focus:outline-none focus:border-[#00f2fe] transition-all resize-none"
               placeholder="Вставте текст новини..."
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -52,9 +50,9 @@ export default function App() {
             <button 
               onClick={handleAnalyze}
               disabled={isAnalyzing || !text}
-              className="w-full mt-6 bg-[#00f2fe] text-black font-black py-4 rounded-2xl hover:opacity-80 transition-all flex justify-center items-center gap-3"
+              className="w-full mt-6 bg-[#00f2fe] text-black font-black py-4 rounded-2xl hover:opacity-80 transition-all flex justify-center items-center gap-3 disabled:opacity-30"
             >
-              {isAnalyzing ? <Activity className="animate-spin" /> : 'RUN MULTI-AGENT ANALYSIS'}
+              {isAnalyzing ? <Activity className="animate-spin" /> : 'RUN AI AGENTS'}
             </button>
           </div>
 
@@ -65,7 +63,7 @@ export default function App() {
                 {result.reasoning.map((trace: string, i: number) => (
                   <div key={i} className="flex gap-4 p-4 bg-slate-950/80 rounded-xl border-l-2 border-[#00f2fe]/50">
                     <CheckCircle size={18} className="text-[#00f2fe] shrink-0 mt-1" />
-                    <p className="text-slate-300 text-sm leading-relaxed">{trace}</p>
+                    <p className="text-slate-300 text-sm">{trace}</p>
                   </div>
                 ))}
               </div>
@@ -74,19 +72,19 @@ export default function App() {
         </div>
 
         <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-3xl text-center h-fit">
-          <h2 className="text-slate-400 text-sm font-semibold mb-6 uppercase tracking-widest">Veracity Metrics</h2>
+          <h2 className="text-slate-400 text-sm font-semibold mb-6 uppercase tracking-widest">Credibility</h2>
           {result ? (
             <div className="relative h-48">
-              <ResponsiveContainer width="100%" height="100%">
+               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie data={MOCK_DATA} innerRadius={60} outerRadius={80} paddingAngle={8} dataKey="value">
+                  <Pie data={MOCK_DATA} innerRadius={60} outerRadius={80} dataKey="value">
                     {MOCK_DATA.map((_, index) => <Cell key={index} fill={COLORS[index]} />)}
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex items-center justify-center text-2xl font-black text-[#00f2fe]">98.5%</div>
             </div>
-          ) : <div className="py-20 text-slate-600 italic">Очікування аналізу...</div>}
+          ) : <div className="py-20 text-slate-600 italic">Очікування...</div>}
         </div>
       </main>
     </div>
