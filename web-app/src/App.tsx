@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Search, BarChart3, Activity, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Shield, Search, BarChart3, Activity, CheckCircle } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const MOCK_DATA = [{ name: 'Credible', value: 98.5 }, { name: 'Uncertain', value: 1.5 }];
@@ -54,18 +54,18 @@ export default function App() {
               disabled={isAnalyzing || !text}
               className="w-full mt-6 bg-[#00f2fe] text-black font-black py-4 rounded-2xl hover:scale-[1.01] transition-all flex justify-center items-center gap-3 disabled:opacity-30"
             >
-              {isAnalyzing ? <Activity className="animate-spin" /> : 'RUN MULTI-AGENT ANALYSIS'}
+              {isAnalyzing ? <Activity className="animate-spin" /> : 'RUN AI ANALYSIS'}
             </button>
           </div>
 
           {result && (
-            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl animate-in fade-in duration-500">
+            <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl">
               <h2 className="text-slate-400 text-sm font-semibold mb-4 uppercase tracking-widest">Reasoning Traces</h2>
               <div className="space-y-4">
                 {result.reasoning.map((trace: string, i: number) => (
                   <div key={i} className="flex gap-4 p-4 bg-slate-950/80 rounded-xl border-l-2 border-[#00f2fe]/50">
                     <CheckCircle size={18} className="text-[#00f2fe] shrink-0 mt-1" />
-                    <p className="text-slate-300 text-sm">{trace}</p>
+                    <p className="text-slate-300 text-sm leading-relaxed">{trace}</p>
                   </div>
                 ))}
               </div>
@@ -73,20 +73,22 @@ export default function App() {
           )}
         </div>
 
-        <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-3xl text-center h-fit">
-          <h2 className="text-slate-400 text-sm font-semibold mb-6 uppercase tracking-widest">Veracity Metrics</h2>
-          {result ? (
-            <div className="relative h-48">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie data={MOCK_DATA} innerRadius={60} outerRadius={80} paddingAngle={8} dataKey="value">
-                    {MOCK_DATA.map((_, index) => <Cell key={index} fill={COLORS[index]} />)}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute inset-0 flex items-center justify-center text-2xl font-black text-[#00f2fe]">98.5%</div>
-            </div>
-          ) : <div className="py-20 text-slate-600 italic">Waiting for analysis...</div>}
+        <div className="space-y-6">
+          <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-3xl text-center h-fit">
+            <h2 className="text-slate-400 text-sm font-semibold mb-6 uppercase tracking-widest">Credibility</h2>
+            {result ? (
+              <div className="relative h-48">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie data={MOCK_DATA} innerRadius={60} outerRadius={80} dataKey="value">
+                      {MOCK_DATA.map((_, index) => <Cell key={index} fill={COLORS[index]} />)}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute inset-0 flex items-center justify-center text-2xl font-black text-[#00f2fe]">98.5%</div>
+              </div>
+            ) : <div className="py-20 text-slate-600 italic">Waiting...</div>}
+          </div>
         </div>
       </main>
     </div>
