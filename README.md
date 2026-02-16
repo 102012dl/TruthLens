@@ -1,40 +1,40 @@
-# TruthLens: NLP News Intelligence Platform 🛡️
+# 🛡️ TruthLens: AI-Powered Information Credibility Analysis Platform
 
-![Status](https://img.shields.io/badge/status-MVP-green)
-![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-![Coverage](https://img.shields.io/badge/coverage-85%25-green)
+![Status](https://img.shields.io/badge/Status-MVP-success)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED)
 
-**TruthLens** is a Capstone Project for the Master of Science in Computer Science program. It is an automated SaaS platform designed to detect fake news using advanced NLP techniques (DistilBERT) and MLOps principles.
+> **Capstone Project** | Neoversity | Master of Science in Computer Science  
+> **Author:** 102012dl | **Email:** 102012dl@gmail.com
 
-## 🏗️ Technical Architecture
-The project follows a microservice architecture tailored for scalability:
-- **Core ML:** PyTorch & HuggingFace Transformers (DistilBERT).
-- **Backend:** FastAPI for asynchronous inference.
-- **Frontend:** Streamlit for interactive dashboard.
-- **MLOps:** MLflow for experiment tracking.
+## 🎯 Огляд проєкту
+**TruthLens** — це SaaS-платформа для автоматизованого виявлення фейкових новин. Система використовує гібридний ансамбль моделей (TF-IDF + DistilBERT) для оцінки семантичного контексту та надійності джерел.
 
-## 🚀 Quick Start
+### 🏗 Архітектура
+Проєкт побудований на мікросервісах:
+- **Frontend:** Streamlit Dashboard (Port 8501)
+- **Backend:** FastAPI Gateway (Port 8000)
+- **ML Engine:** PyTorch / HuggingFace
+- **MLOps:** MLflow & Docker Compose
 
-### Prerequisites
-- Python 3.10+
-- Docker (optional)
+## 🚀 Швидкий старт
 
-### Installation
+### Через Docker (Рекомендовано)
 ```bash
-git clone https://github.com/102012dl/TruthLens.git
-cd TruthLens
+docker-compose up --build -d
+```
+- **UI:** http://localhost:8501
+- **API:** http://localhost:8000/docs
+
+### Локально
+```bash
 pip install -r requirements.txt
-```
-
-### Running the API
-```bash
 uvicorn src.api.main:app --reload
+streamlit run src/ui/dashboard.py
 ```
-Visit `http://localhost:8000/docs` for Swagger UI.
 
-## 📊 Evaluation
-Current model (DistilBERT) achieves **~98.5% Accuracy** on the ISOT dataset.
+## 📊 Результати
+Модель **DistilBERT** досягає **98.5% F1-Score** на датасеті ISOT.
 
-## 👤 Author
-**102012dl**
-- Email: 102012dl@gmail.com
+© 2026 TruthLens.

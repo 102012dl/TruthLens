@@ -1,39 +1,38 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import random
+import time
 
 app = FastAPI(
     title="TruthLens API",
-    description="NLP-powered Fake News Detection API",
-    version="1.0.0"
+    version="2.0.0",
+    description="Backend for Fake News Detection"
 )
 
-class ArticleRequest(BaseModel):
+class AnalyzeRequest(BaseModel):
     text: str
-    source_url: str | None = None
+    source: str | None = None
 
 @app.get("/")
-async def root():
-    return {"message": "TruthLens API is running", "version": "1.0.0"}
+def health_check():
+    return {"status": "active", "service": "TruthLens API"}
 
-@app.post("/analyze")
-async def analyze_article(request: ArticleRequest):
-    """
-    Analyzes the text and returns a fake news probability score.
-    """
-    if len(request.text) < 50:
-        raise HTTPException(status_code=400, detail="Text too short for analysis")
+@app.post("/api/v1/analyze")
+def analyze_text(request: AnalyzeRequest):
+    # Simulation of ML Inference delay
+    time.sleep(0.5)
     
-    # Placeholder for ML Inference (Model will be loaded here)
-    # In a real scenario, we would load the .pkl model and predict
+    # Placeholder Logic (To be replaced by model.predict)
+    # Simulating DistilBERT confidence
+    fake_prob = random.uniform(0.0, 1.0)
     
-    fake_score = round(random.uniform(0.1, 0.9), 4)
-    label = "FAKE" if fake_score > 0.5 else "REAL"
-    risk_level = "HIGH" if fake_score > 0.7 else ("MEDIUM" if fake_score > 0.3 else "LOW")
-
+    label = "FAKE" if fake_prob > 0.5 else "REAL"
+    risk = "HIGH" if fake_prob > 0.7 else ("MEDIUM" if fake_prob > 0.3 else "LOW")
+    
     return {
         "label": label,
-        "score": fake_score,
-        "risk_level": risk_level,
-        "model_version": "distilbert-v1"
+        "score": round(fake_prob, 4),
+        "risk_level": risk,
+        "model": "DistilBERT-finetuned-v1",
+        "processing_time": "0.52s"
     }

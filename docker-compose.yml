@@ -8,21 +8,15 @@ services:
       - "8000:8000"
     volumes:
       - ./src:/app/src
-    environment:
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
 
-  dashboard:
+  ui:
     build: .
-    command: streamlit run src/ui/dashboard.py
+    command: streamlit run src/ui/dashboard.py --server.port 8501
     ports:
       - "8501:8501"
     volumes:
       - ./src:/app/src
+    environment:
+      - API_URL=http://api:8000/api/v1/analyze
     depends_on:
       - api
-
-  mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.10.0
-    ports:
-      - "5000:5000"
-    command: mlflow server --host 0.0.0.0
