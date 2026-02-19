@@ -1,29 +1,16 @@
-<<<<<<< HEAD
 # Python
-=======
->>>>>>> 24165e1f4514abcf9f23b7a318beda28e3dc39ca
 __pycache__/
 *.pyc
 venv/
 .env
-<<<<<<< HEAD
 
 # Data (Don't commit large datasets)
-=======
-.DS_Store
-.ipynb_checkpoints/
->>>>>>> 24165e1f4514abcf9f23b7a318beda28e3dc39ca
 data/raw/*
 !data/raw/.gitkeep
 models/*.pkl
 mlruns/
-<<<<<<< HEAD
 
 # IDE
 .vscode/
 .idea/
 .DS_Store
-=======
-*.log
-*.sh
->>>>>>> 24165e1f4514abcf9f23b7a318beda28e3dc39ca
