@@ -2,11 +2,7 @@ image: python:3.10
 
 stages:
   - test
-<<<<<<< HEAD
   - build
-=======
-  - deploy
->>>>>>> 24165e1f4514abcf9f23b7a318beda28e3dc39ca
 
 cache:
   paths:
@@ -18,7 +14,6 @@ before_script:
   - source venv/bin/activate
   - pip install -r requirements.txt
 
-<<<<<<< HEAD
 # Етап тестування
 run_tests:
   stage: test
@@ -29,22 +24,6 @@ run_tests:
     - pytest || echo "⚠️ Tests finished with warnings"
 
 # Етап перевірки безпеки (Bandit)
-=======
-# Тестування (Unit Tests)
-run_tests:
-  stage: test
-  script:
-    - echo "🧪 Running Tests..."
-    - export PYTHONPATH=$PYTHONPATH:.
-    - mkdir -p tests # Гарантуємо, що папка існує
-    # Запускаємо тести. Якщо тестів немає, ігноруємо помилку для демо.
-    - pytest --junitxml=report.xml || echo "⚠️ Tests finished with warnings (MVP mode)"
-  artifacts:
-    reports:
-      junit: report.xml
-
-# Перевірка безпеки
->>>>>>> 24165e1f4514abcf9f23b7a318beda28e3dc39ca
 security_scan:
   stage: test
   script:
@@ -54,7 +33,6 @@ security_scan:
     paths:
       - bandit-report.json
 
-<<<<<<< HEAD
 # (Опціонально) Етап збірки Docker, якщо увімкнено Docker-in-Docker
 build_image:
   stage: build
@@ -64,13 +42,5 @@ build_image:
   script:
     - echo "🐳 Building Docker image..."
     # - docker build -t truthlens:latest .
-=======
-# Імітація деплою
-deploy_simulation:
-  stage: deploy
-  script:
-    - echo "🚀 Deploying to production environment..."
-    - echo "✅ Deployment successful (Simulation)"
->>>>>>> 24165e1f4514abcf9f23b7a318beda28e3dc39ca
   only:
     - main
