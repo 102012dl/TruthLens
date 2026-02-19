@@ -1,4 +1,4 @@
-#!/bin/bash
+nano update_repo_v2.sh#!/bin/bash
 # TruthLens: V2 Upgrade Script (Final Polish)
 # Author: 102012dl <102012dl@gmail.com>
 # Target Repo: https://github.com/102012dl/TruthLens
