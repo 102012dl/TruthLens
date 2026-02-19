@@ -1,22 +1,102 @@
-version: '3.8'
+version: "3.9"
+
+x-common: &common
+  env_file: .env
+  restart: unless-stopped
 
 services:
+
+  db:
+    image: postgres:16-alpine
+    <<: *common
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-truthlens}
+      POSTGRES_USER: ${POSTGRES_USER:-truthlens}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme123}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-truthlens}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.13.0
+    <<: *common
+    command: >
+      bash -c "pip install -q psycopg2-binary &&
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri postgresql://${POSTGRES_USER:-truthlens}:${POSTGRES_PASSWORD:-changeme123}@db:5432/${POSTGRES_DB:-truthlens}
+      --default-artifact-root /mlflow/artifacts"
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_artifacts:/mlflow/artifacts
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      disable: true
+
   api:
-    build: .
-    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+    build:
+      context: .
+      dockerfile: Dockerfile
+    <<: *common
     ports:
       - "8000:8000"
-    volumes:
-      - ./src:/app/src
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
 
-  ui:
-    build: .
-    command: streamlit run src/ui/dashboard.py --server.port 8501
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    <<: *common
+    command: ["python", "-m", "bot.main"]
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "kill -0 1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    <<: *common
+    command: ["streamlit", "run", "dashboard/app.py",
+              "--server.port=8501",
+              "--server.address=0.0.0.0",
+              "--server.headless=true"]
     ports:
       - "8501:8501"
-    volumes:
-      - ./src:/app/src
-    environment:
-      - API_URL=http://api:8000/api/v1/analyze
     depends_on:
-      - api
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 25s
+
+volumes:
+  postgres_data:
+    name: truthlens_postgres_data
+  mlflow_artifacts:
+    name: truthlens_mlflow_artifacts
