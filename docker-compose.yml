@@ -1,0 +1,56 @@
+# TruthLens — docker-compose skeleton
+# Run: docker-compose up -d
+# Services: api (FastAPI), bot (Telegram), dashboard (Streamlit), mlflow-ui (optional)
+
+services:
+  api:
+    build: .
+    image: truthlens-backend
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      - ENV=production
+    # volumes:  # mount mlruns for MLflow if needed
+    #   - ./mlruns:/app/mlruns
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # Uncomment when bot is implemented and .env has TELEGRAM_BOT_TOKEN
+  # bot:
+  #   build: .
+  #   image: truthlens-backend
+  #   command: ["python", "-m", "bot.telegram_bot"]
+  #   env_file: .env
+  #   environment:
+  #     - BACKEND_URL=http://api:8000
+  #   depends_on:
+  #     api:
+  #       condition: service_healthy
+
+  # Uncomment for Streamlit dashboard
+  # dashboard:
+  #   build: .
+  #   image: truthlens-backend
+  #   command: ["streamlit", "run", "frontend/dashboard.py", "--server.port=8501", "--server.address=0.0.0.0"]
+  #   ports:
+  #     - "8501:8501"
+  #   env_file: .env
+  #   environment:
+  #     - BACKEND_URL=http://api:8000
+  #   depends_on:
+  #     api:
+  #       condition: service_healthy
+
+  # Optional: MLflow UI
+  # mlflow:
+  #   image: python:3.11-slim
+  #   command: ["pip", "install", "mlflow", "&&", "mlflow", "ui", "--host", "0.0.0.0", "--backend-store-uri", "sqlite:///mlflow.db"]
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - ./mlruns:/mlruns
