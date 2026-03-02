@@ -20,24 +20,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fail-fast if secret missing
-        run: |
-          if [ -z "${{ secrets.GITLAB_MIRROR_SSH_KEY }}" ]; then
-            echo "ERROR: Secret GITLAB_MIRROR_SSH_KEY is missing/empty in this repo."
-            exit 1
-          fi
-
       - name: Configure SSH key for GitLab
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          printf "%s" "${{ secrets.GITLAB_MIRROR_SSH_KEY }}" > ~/.ssh/id_ed25519
+          printf "%s" "${{ secrets.GITLAB_MIRROR_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Mirror to GitLab
+        shell: bash
         run: |
+          set -euo pipefail
           git remote remove gitlab 2>/dev/null || true
           git remote add gitlab git@gitlab.com:102012dl/TruthLens.git
           GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" git push --mirror gitlab
