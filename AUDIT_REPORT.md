@@ -1,6 +1,6 @@
 # TruthLens Audit & Automation Report (WSL Script v3)
 
-Generated: Mon Mar  2 20:16:28 CET 2026
+Generated: Mon Mar  2 20:41:59 CET 2026
 
 ## 1. Repository
 - Path: /home/home21id/truthlens
@@ -10,7 +10,7 @@ gitlab	https://gitlab.com/102012dl/TruthLens.git (push)
 origin	https://github.com/102012dl/TruthLens.git (fetch)
 origin	https://github.com/102012dl/TruthLens.git (push)
 - Last commit:
-716df91 chore: track web directory used by project
+e1deaee docs: add automation audit report for capstone
 
 ## 2. Tests
 - Pytest status: OK
