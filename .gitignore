@@ -3,6 +3,9 @@
 # Env and secrets
 .env
 .env.local
+COPY_PASTE_PROMPTS*
+*_PROMPTS.pdf
+*_PROMPTS.md
 .env.*.local
 *.pem
 

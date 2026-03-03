@@ -1,0 +1,12 @@
+---
+description: TruthLens Capstone — repo layout, commands, and conventions
+alwaysApply: true
+---
+
+# TruthLens Capstone
+
+- **Repo:** backend/ (FastAPI, nlp_processor), ml/ (analyzer, fake_news_classifier, rag_pipeline, crew_agents), frontend/ (Streamlit), src/dashboard/ (lightweight demo), notebooks/, artifacts/, docs/capstone/.
+- **Run:** From repo root. API: `uvicorn backend.main:app --host 0.0.0.0 --port 8000`. Demo: `streamlit run src/dashboard/app.py --server.port 8501`. Tests: `pytest -q`.
+- **Paths:** ML model: `artifacts/best_model.joblib`. Capstone index: `docs/capstone/README_CAPSTONE.md`. Status: `docs/capstone/PROJECT_STATUS_MARCH2026.md`.
+- **Don't:** Commit .venv/, node_modules/, large binaries. Check git status before add/commit.
+- **New chat:** Use @docs/capstone/CURSOR_CHAT_CONTEXT.md for short context load.
